@@ -28,21 +28,19 @@ public class UsersController {
     
     @GetMapping("/{mail}")
     public ResponseEntity<User> getUser(@PathVariable String mail) {
-        try {
+        
             User user = userService.getUser(mail);
             if (user != null) {
                 return ResponseEntity.ok(user);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+        
     }
 
     @PostMapping("/add")
     public ResponseEntity<String> addUser(@RequestBody User user) {
-        try {
+        
             User savedUser = userService.saveUser(user);
             if (savedUser != null) {
                 return ResponseEntity.ok(savedUser.getMail() + " is added " +
@@ -51,15 +49,13 @@ public class UsersController {
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add the user.");
             }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+        
     }
 
 
     @PutMapping("/update/{mail}")
     public ResponseEntity<String> updateUser(@PathVariable String mail, @RequestBody User user) {
-        try {
+       
             User updatedUser = userService.updateUser(mail, user);
             if (updatedUser != null) {
                 return ResponseEntity.ok( mail + " is updated " +
@@ -68,22 +64,18 @@ public class UsersController {
             } else {
                 return ResponseEntity.notFound().build();
             }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+        
     }
 
     @DeleteMapping("/delete/{mail}")
     public ResponseEntity<String> deleteUser(@PathVariable String mail) {
-        try {
+        
             boolean result = userService.deleteUser(mail);
             if (result) {
                 return ResponseEntity.ok(mail + " is deleted ");
             } else {
                 return ResponseEntity.notFound().build();
             }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+        } 
     }
-}
+
